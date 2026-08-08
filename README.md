@@ -43,6 +43,8 @@ docker compose version
 
 - [x] Fase 0: Estructura inicial del repositorio
 - [x] Fase 1: Instalación de Docker
-- [ ] Fase 2: Docker Compose (Prometheus, Grafana, Node Exporter)
-- [ ] Fase 3: Configuración de Prometheus
-- [ ] Fase 4: Conexión y dashboards en Grafana
+- [x] Fase 2: Docker Compose (Prometheus, Grafana, Node Exporter)
+- [x] Fase 3: Configuración de Prometheus
+- [x] Fase 4: Conexión y dashboards en Grafana
+- [x] Fase 5: Provisioning de Grafana como código
+- [x] Fase 6: Alertas con Prometheus + Alertmanager
