@@ -1,0 +1,38 @@
+groups:
+  - name: node_alerts
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instancia {{ $labels.instance }} caída"
+          description: "{{ $labels.instance }} lleva más de 1 minuto sin responder."
+
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Uso alto de CPU en {{ $labels.instance }}"
+          description: "CPU por encima del 80% durante más de 5 minutos (actual: {{ $value | printf \"%.2f\" }}%)."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Uso alto de memoria en {{ $labels.instance }}"
+          description: "Memoria por encima del 85% (actual: {{ $value | printf \"%.2f\" }}%)."
+
+      - alert: LowDiskSpace
+        expr: (node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"}) * 100 < 15
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Poco espacio en disco en {{ $labels.instance }}"
+          description: "Espacio libre por debajo del 15% en /."
